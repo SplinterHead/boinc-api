@@ -5,4 +5,4 @@ fmt:
 
 .PHONY: test
 test: fmt
-	poetry run pytest -vv
+	poetry run pytest -vv -s
