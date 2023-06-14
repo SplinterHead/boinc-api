@@ -21,6 +21,11 @@ def test_client():
     }
 
 
+@fixture
+def short_client():
+    return {"name": "test_client", "hostname": "localhost", "id": MOCK_UUID}
+
+
 def test_add_pushes_client_to_internal_storage(app, client, test_client):
     client.post("/v1/clients/add", json=test_client)
     assert len(app.config["clients"]) is 1
@@ -32,7 +37,6 @@ def test_added_client_is_assigned_a_uuid(mock_uuid, app, client, test_client):
     client.post("/v1/clients/add", json=test_client)
 
     assert MOCK_UUID in app.config["clients"].keys()
-    assert MOCK_UUID == app.config["clients"][MOCK_UUID]["id"]
 
 
 @patch("uuid.uuid4")
@@ -40,3 +44,19 @@ def test_client_uuid_is_returned_on_successful_storage(mock_uuid, client, test_c
     mock_uuid.return_value = _mock_uuid()
     resp = client.post("/v1/clients/add", json=test_client)
     assert resp.json == {"client_id": MOCK_UUID}
+
+
+def test_getall_returns_empty_list_when_no_clients_saved(client):
+    resp = client.get("/v1/clients/getall")
+
+    assert resp.status_code == 200
+    assert resp.json == []
+
+
+@patch("uuid.uuid4")
+def test_getall_returns_known_client(mock_uuid, client, test_client, short_client):
+    mock_uuid.return_value = _mock_uuid()
+    client.post("/v1/clients/add", json=test_client)
+    resp = client.get("/v1/clients/getall")
+
+    assert resp.json == [short_client]

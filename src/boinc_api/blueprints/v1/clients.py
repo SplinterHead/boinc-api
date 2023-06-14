@@ -9,7 +9,14 @@ blueprint = Blueprint(name="clients", import_name=__name__, url_prefix="/clients
 def add_client():
     client_data = request.json
     client_uuid = str(uuid.uuid4())
-    client_data.update({"id": client_uuid})
     current_app.config["clients"][client_uuid] = client_data
 
     return {"client_id": client_uuid}
+
+
+@blueprint.route("/getall", methods=["GET"])
+def get_all_clients():
+    return [
+        {"id": client_id, "name": client["name"], "hostname": client["hostname"]}
+        for client_id, client in current_app.config["clients"].items()
+    ]
