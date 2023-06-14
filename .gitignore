@@ -4,3 +4,9 @@
 # Virtualenv
 venv/
 .venv/
+
+# Python
+*.pyc
+
+# Pytest
+.pytest_cache/
