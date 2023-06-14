@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "boinc-api"
+version = "0.1.0"
+description = "Flask API for serving the boinc-client on a web interface"
+authors = ["Lewis England <lewis2004@hotmail.com>"]
+license = "gpl-3"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
