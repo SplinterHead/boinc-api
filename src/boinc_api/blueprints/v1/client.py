@@ -13,3 +13,14 @@ def get_client_version():
 def get_host_info():
     client_id = request.args["client"]
     return current_app.config["clients"][client_id]["instance"].get_host_info()
+
+
+@blueprint.route("/basicinfo", methods=["GET"])
+def get_basic_info():
+    client_id = request.args["client"]
+    version = current_app.config["clients"][client_id]["instance"].get_client_version()
+    host_info = current_app.config["clients"][client_id]["instance"].get_host_info()
+
+    basic_host_info = {"host_info": {"os_name": host_info["host_info"]["os_name"]}}
+
+    return version | basic_host_info

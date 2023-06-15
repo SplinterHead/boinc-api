@@ -10,3 +10,13 @@ def test_can_get_client_host_info(mock_client):
 
     assert resp.status_code == 200
     assert resp.json["host_info"]["os_name"] == "Linux Ubuntu"
+
+
+def test_can_get_basic_info(mock_client):
+    resp = mock_client.get("/v1/client/basicinfo?client=1")
+
+    assert resp.status_code == 200
+    assert resp.json == {
+        "version": {"major": 1, "minor": 2, "patch": 3},
+        "host_info": {"os_name": "Linux Ubuntu"},
+    }
