@@ -10,6 +10,7 @@ readme = "README.md"
 python = "^3.10"
 flask = "^2.3.2"
 boinc-client = "^1.4.0"
+flask-cors = "^3.0.10"
 
 
 [tool.poetry.group.dev.dependencies]
