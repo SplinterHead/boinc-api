@@ -1,5 +1,4 @@
-import re
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 from uuid import UUID
 
 from pytest import fixture
@@ -31,17 +30,15 @@ def test_add_pushes_client_to_internal_storage(app, client, test_client):
     assert len(app.config["clients"]) is 1
 
 
-@patch("uuid.uuid4")
-def test_added_client_is_assigned_a_uuid(mock_uuid, app, client, test_client):
-    mock_uuid.return_value = _mock_uuid()
+@patch("uuid.uuid4", Mock(return_value=_mock_uuid()))
+def test_added_client_is_assigned_a_uuid(app, client, test_client):
     client.post("/v1/clients/add", json=test_client)
 
     assert MOCK_UUID in app.config["clients"].keys()
 
 
-@patch("uuid.uuid4")
-def test_client_uuid_is_returned_on_successful_storage(mock_uuid, client, test_client):
-    mock_uuid.return_value = _mock_uuid()
+@patch("uuid.uuid4", Mock(return_value=_mock_uuid()))
+def test_client_uuid_is_returned_on_successful_storage(client, test_client):
     resp = client.post("/v1/clients/add", json=test_client)
     assert resp.json == {"client_id": MOCK_UUID}
 
@@ -53,9 +50,8 @@ def test_getall_returns_empty_list_when_no_clients_saved(client):
     assert resp.json == []
 
 
-@patch("uuid.uuid4")
-def test_getall_returns_known_client(mock_uuid, client, test_client, short_client):
-    mock_uuid.return_value = _mock_uuid()
+@patch("uuid.uuid4", Mock(return_value=_mock_uuid()))
+def test_getall_returns_known_client(client, test_client, short_client):
     client.post("/v1/clients/add", json=test_client)
     resp = client.get("/v1/clients/getall")
 
