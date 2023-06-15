@@ -25,20 +25,32 @@ def short_client():
     return {"name": "test_client", "hostname": "localhost", "id": MOCK_UUID}
 
 
-def test_add_pushes_client_to_internal_storage(app, client, test_client):
+@patch("boinc_api.blueprints.v1.clients._create_client", autospec=True)
+def test_add_pushes_client_to_internal_storage(_, app, client, test_client):
     client.post("/v1/clients/add", json=test_client)
     assert len(app.config["clients"]) is 1
 
 
+@patch("boinc_api.blueprints.v1.clients.RpcClient", autospec=True)
+@patch("boinc_api.blueprints.v1.clients.Boinc", autospec=True)
+def test_add_creates_a_boinc_client_instance(boinc_mock, rpc_mock, client, test_client):
+    client.post("/v1/clients/add", json=test_client)
+
+    assert rpc_mock.called
+    assert boinc_mock.called
+
+
 @patch("uuid.uuid4", Mock(return_value=_mock_uuid()))
-def test_added_client_is_assigned_a_uuid(app, client, test_client):
+@patch("boinc_api.blueprints.v1.clients._create_client", autospec=True)
+def test_added_client_is_assigned_a_uuid(_, app, client, test_client):
     client.post("/v1/clients/add", json=test_client)
 
     assert MOCK_UUID in app.config["clients"].keys()
 
 
 @patch("uuid.uuid4", Mock(return_value=_mock_uuid()))
-def test_client_uuid_is_returned_on_successful_storage(client, test_client):
+@patch("boinc_api.blueprints.v1.clients._create_client", autospec=True)
+def test_client_uuid_is_returned_on_successful_storage(_, client, test_client):
     resp = client.post("/v1/clients/add", json=test_client)
     assert resp.json == {"client_id": MOCK_UUID}
 
@@ -51,7 +63,8 @@ def test_getall_returns_empty_list_when_no_clients_saved(client):
 
 
 @patch("uuid.uuid4", Mock(return_value=_mock_uuid()))
-def test_getall_returns_known_client(client, test_client, short_client):
+@patch("boinc_api.blueprints.v1.clients._create_client", autospec=True)
+def test_getall_returns_known_client(_, client, test_client, short_client):
     client.post("/v1/clients/add", json=test_client)
     resp = client.get("/v1/clients/getall")
 
