@@ -63,14 +63,14 @@ files = [
 
 [[package]]
 name = "boinc-client"
-version = "1.4.2"
+version = "1.4.3"
 description = "Python API for interacting with a BOINC client via RPC"
 category = "main"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "boinc_client-1.4.2-py3-none-any.whl", hash = "sha256:f169bb54a9f19f1433a7be3284c24aa13b4f216421a151f08d917350253723fe"},
-    {file = "boinc_client-1.4.2.tar.gz", hash = "sha256:4a35b93c5b10630924d40fe47d5a4baeca43a5b0d4fac3409251eb4c5c5bbf6f"},
+    {file = "boinc_client-1.4.3-py3-none-any.whl", hash = "sha256:a24b756001370e60a33c03c41916b63354a3fb047d4e69d486ec4eaabb97af7e"},
+    {file = "boinc_client-1.4.3.tar.gz", hash = "sha256:55607eaf9d4aa7d6f6efdbffe4bc72fa619d63d68db365dc1228f05021914a72"},
 ]
 
 [package.dependencies]
@@ -541,4 +541,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "f556d4be6fa9d3d8d01255c14a53493b107d8db5b604a7852f1ef66c5cbe8673"
+content-hash = "6a130cfd70d97e599fa2eeba95fb208b7eb44a4631aa21d9f6b87aa81181789a"

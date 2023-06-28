@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 flask = "^2.3.2"
-boinc-client = "^1.4.2"
+boinc-client = "^1.4.3"
 flask-cors = "^3.0.10"
 
 
