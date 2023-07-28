@@ -1,5 +1,3 @@
-import json
-
 from flask import Blueprint, current_app, request
 
 blueprint = Blueprint(name="client", import_name=__name__, url_prefix="/client")
@@ -43,3 +41,15 @@ def get_client_state():
     resp = client_state["client_state"] | version
 
     return resp
+
+
+@blueprint.route("/diskstats", methods=["GET"])
+def get_disk_stats():
+    client_id = request.args["client"]
+    return current_app.config["clients"][client_id]["instance"].get_disk_stats()
+
+
+@blueprint.route("/networkstats", methods=["GET"])
+def get_network_stats():
+    client_id = request.args["client"]
+    return current_app.config["clients"][client_id]["instance"].get_network_stats()
