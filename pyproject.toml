@@ -8,14 +8,14 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-flask = "^2.3.3"
+flask = "^2.3.2"
 boinc-client = "^1.7.0"
 flask-cors = "^3.0.10"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
-black = "^23.3.0"
+black = "^23.7.0"
 isort = "^5.12.0"
 
 [build-system]
